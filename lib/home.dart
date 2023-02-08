@@ -1,4 +1,6 @@
+import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:zigy_assignment/createUser.view.dart';
@@ -38,6 +40,15 @@ class _MyHomePageState extends State<MyHomePage> {
       if (kDebugMode) {
         print(error);
       }
+      setState(() {
+        loading = false;
+      });
+      FlushbarHelper.createError(
+          message: "Something when wrong",
+          duration: const Duration(seconds: 3),
+          title: "Error")
+        ..show(context);
+
       rethrow;
     }
   }
@@ -84,8 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const CreateUserView())),
+        onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const CreateUserView())),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
